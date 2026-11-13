@@ -251,8 +251,6 @@ inline static std::unordered_map<std::string, ParamKeyAttributes> keys = {
     {"ToyotaAutoHold", {PERSISTENT | BACKUP, BOOL, "0"}},
     {"ToyotaBrakeOnset", {PERSISTENT | BACKUP, BOOL, "0"}},
     {"ToyotaDriveMode", {PERSISTENT | BACKUP, BOOL, "0"}},
-    {"AccelPersonalityEnabled", {PERSISTENT | BACKUP, BOOL, "0"}},
-    {"AccelPersonality", {PERSISTENT | BACKUP, INT, "1"}},
 
     {"BlindSpot", {PERSISTENT | BACKUP, BOOL, "0"}},
 

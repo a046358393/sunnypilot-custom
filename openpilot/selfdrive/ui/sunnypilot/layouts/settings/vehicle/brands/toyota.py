@@ -39,8 +39,8 @@ DESCRIPTIONS = {
     'This changes vehicle deceleration behavior and requires careful controlled validation.'
   ),
   'drive_mode': tr_noop(
-    'Links Toyota ECO/NORMAL/SPORT drive mode signals to the sunnypilot acceleration profile. ' +
-    'Enables the acceleration profile controller automatically.'
+    'Links Toyota ECO/NORMAL/SPORT drive mode signals to sunnypilot Longitudinal Personality ' +
+    '(Relaxed/Standard/Aggressive). The change follows the vehicle drive mode while this option is enabled.'
   ),
 }
 
@@ -120,7 +120,6 @@ class ToyotaSettings(BrandSettings):
           ui_state.params.put_bool("ToyotaBrakeOnset", False)
           self.brake_onset.action_item.set_state(False)
           ui_state.params.put_bool("ToyotaDriveMode", False)
-          ui_state.params.put_bool("AccelPersonalityEnabled", False)
           self.drive_mode.action_item.set_state(False)
           ui_state.params.put_bool("OnroadCycleRequested", True)
         else:
@@ -213,7 +212,6 @@ class ToyotaSettings(BrandSettings):
       def confirm_callback(result: int):
         if result == DialogResult.CONFIRM:
           ui_state.params.put_bool("ToyotaDriveMode", True)
-          ui_state.params.put_bool("AccelPersonalityEnabled", True)
           ui_state.params.put_bool("OnroadCycleRequested", True)
         else:
           self.drive_mode.action_item.set_state(False)
@@ -224,7 +222,6 @@ class ToyotaSettings(BrandSettings):
       gui_app.push_widget(dlg)
     else:
       ui_state.params.put_bool("ToyotaDriveMode", False)
-      ui_state.params.put_bool("AccelPersonalityEnabled", False)
       ui_state.params.put_bool("OnroadCycleRequested", True)
 
   def update_settings(self):
