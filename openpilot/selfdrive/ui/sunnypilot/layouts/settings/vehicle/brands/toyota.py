@@ -36,7 +36,7 @@ DESCRIPTIONS = {
   ),
   'brake_onset': tr_noop(
     'Softens the start of longitudinal braking and applies hybrid brake handover and overshoot corrections. ' +
-    'This changes vehicle deceleration behaviour and requires careful controlled validation.'
+    'This changes vehicle deceleration behavior and requires careful controlled validation.'
   ),
   'drive_mode': tr_noop(
     'Links Toyota ECO/NORMAL/SPORT drive mode signals to the sunnypilot acceleration profile. ' +
