@@ -11,7 +11,7 @@ from openpilot.system.ui.lib.multilang import tr, tr_noop
 from openpilot.system.ui.widgets import DialogResult
 from openpilot.system.ui.widgets.confirm_dialog import ConfirmDialog
 from openpilot.system.ui.sunnypilot.widgets.list_view import toggle_item_sp
-from opendbc.car.toyota.values import ToyotaFlags, TSS2_CAR, RADAR_ACC_CAR, SECOC_CAR
+from opendbc.car.toyota.values import CAR, ToyotaFlags, TSS2_CAR, RADAR_ACC_CAR, SECOC_CAR
 
 
 ONROAD_ONLY_DESCRIPTION = tr_noop("Start the vehicle to check vehicle compatibility.")
@@ -264,7 +264,10 @@ class ToyotaSettings(BrandSettings):
 
       auto_hold_supported = ui_state.CP.carFingerprint in (TSS2_CAR - RADAR_ACC_CAR - SECOC_CAR)
       self.auto_brake_hold.action_item.set_enabled(auto_hold_supported and not ui_state.engaged)
-      self.brake_onset.action_item.set_enabled(longitudinal and not enforce_stock and tss2 and not ui_state.engaged)
+      brake_onset_supported = (longitudinal and not enforce_stock and
+                               ui_state.CP.carFingerprint == CAR.TOYOTA_COROLLA_TSS2 and
+                               bool(ui_state.CP.flags & ToyotaFlags.HYBRID))
+      self.brake_onset.action_item.set_enabled(brake_onset_supported and not ui_state.engaged)
       self.drive_mode.action_item.set_enabled(tss2 and not ui_state.engaged)
     else:
       self.stop_and_go_hack.action_item.set_enabled(False)
