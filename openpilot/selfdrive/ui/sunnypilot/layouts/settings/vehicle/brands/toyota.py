@@ -120,6 +120,7 @@ class ToyotaSettings(BrandSettings):
           ui_state.params.put_bool("ToyotaBrakeOnset", False)
           self.brake_onset.action_item.set_state(False)
           ui_state.params.put_bool("ToyotaDriveMode", False)
+          ui_state.params.put_bool("AccelPersonalityEnabled", False)
           self.drive_mode.action_item.set_state(False)
           ui_state.params.put_bool("OnroadCycleRequested", True)
         else:
@@ -223,6 +224,7 @@ class ToyotaSettings(BrandSettings):
       gui_app.push_widget(dlg)
     else:
       ui_state.params.put_bool("ToyotaDriveMode", False)
+      ui_state.params.put_bool("AccelPersonalityEnabled", False)
       ui_state.params.put_bool("OnroadCycleRequested", True)
 
   def update_settings(self):
@@ -268,7 +270,7 @@ class ToyotaSettings(BrandSettings):
                                ui_state.CP.carFingerprint == CAR.TOYOTA_COROLLA_TSS2 and
                                bool(ui_state.CP.flags & ToyotaFlags.HYBRID))
       self.brake_onset.action_item.set_enabled(brake_onset_supported and not ui_state.engaged)
-      self.drive_mode.action_item.set_enabled(tss2 and not ui_state.engaged)
+      self.drive_mode.action_item.set_enabled(longitudinal and not enforce_stock and tss2 and not ui_state.engaged)
     else:
       self.stop_and_go_hack.action_item.set_enabled(False)
       new_desc = "<b>" + tr(ONROAD_ONLY_DESCRIPTION) + "</b>\n\n" + tr(DESCRIPTIONS["stop_and_go_hack"])
