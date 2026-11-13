@@ -271,3 +271,20 @@ jobs:
         with:
           name: ui-report-${{ inputs.run_number || '1' }}-${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && 'master' || github.event.number }}
           path: openpilot/selfdrive/ui/tests/diff/report
+
+  opendbc_toyota_safety:
+    name: OpenDBC Toyota safety and controller tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+      - name: Initialize personal OpenDBC submodule
+        run: git submodule update --init --depth 1 opendbc_repo
+      - name: Run OpenDBC safety tests
+        run: opendbc_repo/opendbc/safety/tests/test.sh
+      - name: Run Toyota sunnypilot unit tests
+        working-directory: opendbc_repo
+        run: |
+          source .venv/bin/activate
+          python -m unittest discover -s opendbc/sunnypilot/car/toyota/tests -v
+
