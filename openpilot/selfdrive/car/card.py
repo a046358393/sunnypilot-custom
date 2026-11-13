@@ -19,6 +19,7 @@ from opendbc.car.carlog import carlog
 from opendbc.car.fw_versions import ObdCallback
 from opendbc.car.car_helpers import get_car, interfaces
 from opendbc.car.interfaces import CarInterfaceBase, RadarInterfaceBase
+from opendbc.sunnypilot.car.toyota.values import ToyotaFlagsSP
 from openpilot.selfdrive.pandad import can_capnp_to_list, can_list_to_can_capnp
 from openpilot.selfdrive.car.cruise import VCruiseHelper
 from openpilot.selfdrive.car.helpers import convert_carControlSP, convert_to_capnp
@@ -124,7 +125,7 @@ class Car:
       self.RI = RI
 
     self.CP.alternativeExperience = 0
-    if self.params.get_bool("ToyotaAutoHold"):
+    if self.CP_SP.flags & ToyotaFlagsSP.SP_AUTO_BRAKE_HOLD:
       self.CP.alternativeExperience |= ALTERNATIVE_EXPERIENCE.ALLOW_AEB
     # mads
     set_alternative_experience(self.CP, self.CP_SP, self.params)
